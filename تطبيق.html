@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>نور الكهف - تذكير قراءة سورة الكهف</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* الرأس */
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            color: white;
+        }
+
+        .header .icon {
+            font-size: 70px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* البطاقات */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 28px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-desc {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* الإحصائيات */
+        .stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 28px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .stat-emoji {
+            font-size: 35px;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: #f59e0b;
+        }
+
+        .stat-unit {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        /* الأزرار */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 60px;
+            font-size: 18px;
+            font-weight: 600;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-success:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        /* منتقي الوقت */
+        .time-picker-container {
+            margin-bottom: 20px;
+        }
+
+        .time-picker {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            font-family: 'Tajawal', sans-serif;
+            border: 2px solid #e2e8f0;
+            border-radius: 60px;
+            text-align: center;
+            background: #f8fafc;
+            color: #1e293b;
+        }
+
+        .reminder-status {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 60px;
+            text-align: center;
+            font-size: 14px;
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        /* قائمة التحديات */
+        .challenges-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .challenge-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .challenge-item:hover {
+            background: #f1f5f9;
+            transform: translateX(5px);
+        }
+
+        .challenge-checkbox {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: #f59e0b;
+        }
+
+        .challenge-text {
+            flex: 1;
+            font-size: 15px;
+            color: #1e293b;
+        }
+
+        .challenge-points {
+            font-size: 12px;
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .challenge-item.completed .challenge-text {
+            text-decoration: line-through;
+            color: #94a3b8;
+        }
+
+        /* فضائل السورة */
+        .virtues-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .virtue-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #fef3c7;
+            border-radius: 20px;
+            color: #92400e;
+        }
+
+        .virtue-icon {
+            font-size: 24px;
+        }
+
+        /* النصائح */
+        .tips-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tip-item {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-size: 14px;
+            color: #4338ca;
+        }
+
+        /* تاريخ المداومة */
+        .history-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .history-badge {
+            background: #f1f5f9;
+            padding: 8px 12px;
+            border-radius: 40px;
+            font-size: 12px;
+            color: #475569;
+        }
+
+        .history-badge.completed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        /* التذييل */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        /* إشعار */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 60px;
+            font-size: 14px;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* تحسينات للجوال */
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+            .card {
+                padding: 20px;
+            }
+            .header h1 {
+                font-size: 28px;
+            }
+        }
+
+        /* طلب الإذن للإشعارات */
+        .permission-card {
+            background: #fef9e3;
+            border-right: 4px solid #f59e0b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- الرأس -->
+        <div class="header">
+            <div class="icon">🍃</div>
+            <h1>نور الكهف</h1>
+            <p>تذكير أسبوعي بسورة الكهف</p>
+        </div>
+
+        <!-- الإحصائيات -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-emoji">🔥</div>
+                <div class="stat-label">المداومة</div>
+                <div class="stat-value" id="streakValue">0</div>
+                <div class="stat-unit">أسبوع</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-emoji">💡</div>
+                <div class="stat-label">نقاط النور</div>
+                <div class="stat-value" id="pointsValue">0</div>
+                <div class="stat-unit">نقطة</div>
+            </div>
+        </div>
+
+        <!-- طلب إذن الإشعارات -->
+        <div class="card permission-card" id="permissionCard" style="display: none;">
+            <h3>🔔 تفعيل الإشعارات</h3>
+            <p class="card-desc">لتصلك تذكيرات أسبوعية، يرجى تفعيل الإشعارات</p>
+            <button id="enableNotificationsBtn" class="btn btn-primary">🔔 تفعيل الإشعارات</button>
+        </div>
+
+        <!-- ضبط التذكير -->
+        <div class="card">
+            <h3>🕐 ضبط التذكير</h3>
+            <p class="card-desc">اختر الوقت الذي تريد أن يتم تذكيرك فيه كل جمعة</p>
+            <div class="time-picker-container">
+                <input type="time" id="reminderTime" class="time-picker" value="08:00">
+            </div>
+            <button id="setReminderBtn" class="btn btn-primary">
+                <span>🔔</span> فعّل التذكير
+            </button>
+            <div id="reminderStatus" class="reminder-status"></div>
+        </div>
+
+        <!-- زر تأكيد القراءة -->
+        <div class="card">
+            <h3>📖 تأكيد القراءة</h3>
+            <p class="card-desc">بعد أن تنتهي من قراءة سورة الكهف، اضغط هنا لتسجيل إنجازك</p>
+            <button id="markReadBtn" class="btn btn-success">
+                <span>✅</span> قرأت سورة الكهف اليوم
+            </button>
+        </div>
+
+        <!-- تحديات الأسبوع -->
+        <div class="card">
+            <h3>📋 تحديات الأسبوع</h3>
+            <p class="card-desc">أكمل التحديات لتحصل على نقاط إضافية</p>
+            <div class="challenges-list" id="challengesList"></div>
+        </div>
+
+        <!-- فضائل السورة -->
+        <div class="card">
+            <h3>✨ فضائل سورة الكهف</h3>
+            <div class="virtues-list">
+                <div class="virtue-item">
+                    <span class="virtue-icon">⭐</span>
+                    <span>من قرأ سورة الكهف يوم الجمعة أضاء له من النور ما بين الجمعتين</span>
+                </div>
+                <div class="virtue-item">
+                    <span class="virtue-icon">🛡️</span>
+                    <span>حفظ من فتنة المسيح الدجال</span>
+                </div>
+                <div class="virtue-item">
+                    <span class="virtue-icon">🕊️</span>
+                    <span>تنزل السكينة والرحمة على قارئها</span>
+                </div>
+                <div class="virtue-item">
+                    <span class="virtue-icon">📚</span>
+                    <span>تشفع لقارئها يوم القيامة</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- نصائح للمداومة -->
+        <div class="card">
+            <h3>💡 نصائح للمداومة</h3>
+            <div class="tips-list">
+                <div class="tip-item">📱 اجعل التطبيق على الشاشة الرئيسية</div>
+                <div class="tip-item">🎯 اقرأ 10 آيات كل يوم من الخميس</div>
+                <div class="tip-item">👨‍👩‍👧‍👦 شجع أفراد عائلتك للمشاركة</div>
+                <div class="tip-item">📖 استمع للتفسير أثناء القيادة</div>
+                <div class="tip-item">🤲 ادع الله أن يثبتك</div>
+            </div>
+        </div>
+
+        <!-- تاريخ المداومة -->
+        <div class="card">
+            <h3>📅 تاريخ المداومة</h3>
+            <div class="history-list" id="historyList"></div>
+        </div>
+
+        <footer>
+            <p>🍃 نور الكهف | تذكير بقراءة سورة الكهف كل جمعة</p>
+            <p style="font-size: 11px; margin-top: 8px;">اللهم اجعلنا من أهل القرآن</p>
+        </footer>
+    </div>
+
+    <script>
+        // البيانات
+        let streak = 0;
+        let points = 0;
+        let lastReadDate = null;
+        let challenges = [
+            { id: 1, text: "⭐ اقرأ سورة الكهف كاملة", points: 20, completed: false },
+            { id: 2, text: "📖 تأمل في قصة أصحاب الكهف", points: 15, completed: false },
+            { id: 3, text: "🤲 ادع بدعاء من السورة", points: 15, completed: false },
+            { id: 4, text: "💫 شارك فضل السورة مع صديق", points: 10, completed: false },
+            { id: 5, text: "🌙 اقرأ الآيات العشر الأولى", points: 10, completed: false }
+        ];
+        let history = [];
+        
+        // تحميل البيانات المحفوظة
+        function loadData() {
+            const savedStreak = localStorage.getItem('electhiker_streak');
+            const savedPoints = localStorage.getItem('electhiker_points');
+            const savedLastRead = localStorage.getItem('electhiker_lastRead');
+            const savedChallenges = localStorage.getItem('electhiker_challenges');
+            const savedHistory = localStorage.getItem('electhiker_history');
+            
+            if (savedStreak) streak = parseInt(savedStreak);
+            if (savedPoints) points = parseInt(savedPoints);
+            if (savedLastRead) lastReadDate = savedLastRead;
+            if (savedChallenges) {
+                const saved = JSON.parse(savedChallenges);
+                if (Array.isArray(saved)) challenges = saved;
+            }
+            if (savedHistory) {
+                const saved = JSON.parse(savedHistory);
+                if (Array.isArray(saved)) history = saved;
+            }
+            
+            updateDisplay();
+            checkWeeklyReset();
+        }
+        
+        // حفظ البيانات
+        function saveData() {
+            localStorage.setItem('electhiker_streak', streak);
+            localStorage.setItem('electhiker_points', points);
+            localStorage.setItem('electhiker_lastRead', lastReadDate);
+            localStorage.setItem('electhiker_challenges', JSON.stringify(challenges));
+            localStorage.setItem('electhiker_history', JSON.stringify(history));
+        }
+        
+        // تحديث الواجهة
+        function updateDisplay() {
+            document.getElementById('streakValue').innerText = streak;
+            document.getElementById('pointsValue').innerText = points;
+            renderChallenges();
+            renderHistory();
+        }
+        
+        // عرض التحديات
+        function renderChallenges() {
+            const container = document.getElementById('challengesList');
+            container.innerHTML = '';
+            
+            challenges.forEach(challenge => {
+                const div = document.createElement('div');
+                div.className = 'challenge-item' + (challenge.completed ? ' completed' : '');
+                div.innerHTML = `
+                    <input type="checkbox" class="challenge-checkbox" ${challenge.completed ? 'checked' : ''} data-id="${challenge.id}">
+                    <span class="challenge-text">${challenge.text}</span>
+                    <span class="challenge-points">+${challenge.points} نقطة</span>
+                `;
+                container.appendChild(div);
+            });
+            
+            document.querySelectorAll('.challenge-checkbox').forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    const challenge = challenges.find(c => c.id === id);
+                    if (challenge && !challenge.completed && e.target.checked) {
+                        challenge.completed = true;
+                        points += challenge.points;
+                        showToast(`🎉 أحسنت! +${challenge.points} نقطة نور`);
+                        saveData();
+                        updateDisplay();
+                    } else if (!e.target.checked) {
+                        e.target.checked = true;
+                        showToast('⚠️ لا يمكن إلغاء التحدي بعد إكماله');
+                    }
+                });
+            });
+        }
+        
+        // عرض تاريخ المداومة
+        function renderHistory() {
+            const container = document.getElementById('historyList');
+            container.innerHTML = '';
+            
+            const last6Weeks = history.slice(-6).reverse();
+            if (last6Weeks.length === 0) {
+                container.innerHTML = '<span class="history-badge">لا يوجد سجل بعد</span>';
+                return;
+            }
+            
+            last6Weeks.forEach(week => {
+                const badge = document.createElement('span');
+                badge.className = 'history-badge' + (week.completed ? ' completed' : '');
+                badge.innerText = week.date;
+                container.appendChild(badge);
+            });
+        }
+        
+        // التحقق من إعادة ضبط الأسبوع
+        function checkWeeklyReset() {
+            const today = new Date();
+            const todayStr = today.toLocaleDateString('ar');
+            
+            if (lastReadDate !== todayStr) {
+                const isFriday = today.getDay() === 5; // الجمعة = 5
+                if (isFriday && lastReadDate !== todayStr) {
+                    // لم يقرأ بعد هذا الجمعة
+                }
+            }
+        }
+        
+        // تسجيل القراءة
+        function markAsRead() {
+            const today = new Date();
+            const todayStr = today.toLocaleDateString('ar');
+            
+            if (lastReadDate === todayStr) {
+                showToast('⚠️ لقد سجلت القراءة اليوم بالفعل!');
+                return;
+            }
+            
+            // تحديث المداومة
+            const lastWeek = lastReadDate ? new Date(lastReadDate) : null;
+            const todayDate = new Date();
+            
+            if (lastWeek && (todayDate - lastWeek) <= 8 * 24 * 60 * 60 * 1000) {
+                streak++;
+            } else {
+                streak = 1;
+            }
+            
+            points += 10;
+            lastReadDate = todayStr;
+            
+            // إضافة للسجل
+            history.push({
+                date: todayStr,
+                completed: true
+            });
+            
+            // الاحتفاظ بآخر 20 أسبوع فقط
+            if (history.length > 20) history.shift();
+            
+            saveData();
+            updateDisplay();
+            showToast('🎉 أحسنت! +10 نقاط نور. ثبتك الله');
+        }
+        
+        // إظهار رسالة
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerText = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        }
+        
+        // طلب إذن الإشعارات
+        async function requestNotificationPermission() {
+            if ('Notification' in window) {
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    document.getElementById('permissionCard').style.display = 'none';
+                    showToast('🔔 تم تفعيل الإشعارات بنجاح');
+                    return true;
+                } else {
+                    showToast('⚠️ يرجى تفعيل الإشعارات لتصل لك التذكيرات');
+                    return false;
+                }
+            }
+            return false;
+        }
+        
+                // إرسال إشعار
+        function sendNotification(title, body) {
+            if ('Notification' in window && Notification.permission === 'granted') {
+                // إرسال إشعار فوري
+                new Notification(title, { 
+                    body: body, 
+                    icon: '🍃',
+                    badge: '🍃',
+                    vibrate: [200, 100, 200],
+                    silent: false
+                });
+                
+                // تسجيل الإشعار في السجل
+                logNotification(title, body);
+            }
+        }
+        
+        // تسجيل سجل الإشعارات
+        function logNotification(title, body) {
+            let notifications = localStorage.getItem('electhiker_notifications');
+            if (notifications) {
+                notifications = JSON.parse(notifications);
+            } else {
+                notifications = [];
+            }
+            
+            notifications.unshift({
+                title: title,
+                body: body,
+                time: new Date().toLocaleString('ar'),
+                date: new Date().getTime()
+            });
+            
+            // الاحتفاظ بآخر 20 إشعار فقط
+            if (notifications.length > 20) {
+                notifications = notifications.slice(0, 20);
+            }
+            
+            localStorage.setItem('electhiker_notifications', JSON.stringify(notifications));
+        }
+        
+        // ضبط التذكير المتكرر
+        function setReminder() {
+            const time = document.getElementById('reminderTime').value;
+            if (!time) {
+                showToast('⚠️ الرجاء اختيار الوقت أولاً');
+                return;
+            }
+            
+            const [hour, minute] = time.split(':');
+            
+            // حساب وقت التذكير التالي (الجمعة القادمة)
+            const now = new Date();
+            const nextFriday = new Date();
+            const daysUntilFriday = (5 - now.getDay() + 7) % 7;
+            const daysToAdd = daysUntilFriday === 0 ? 7 : daysUntilFriday;
+            nextFriday.setDate(now.getDate() + daysToAdd);
+            nextFriday.setHours(parseInt(hour), parseInt(minute), 0, 0);
+            
+            if (nextFriday <= now) {
+                nextFriday.setDate(nextFriday.getDate() + 7);
+            }
+            
+            const timeUntil = nextFriday - now;
+            
+            // حفظ التذكير في localStorage
+            const reminderData = {
+                time: time,
+                hour: parseInt(hour),
+                minute: parseInt(minute),
+                nextReminder: nextFriday.getTime(),
+                active: true
+            };
+            localStorage.setItem('electhiker_reminder', JSON.stringify(reminderData));
+            
+            // إعداد التذكير الحالي
+            const timeoutId = setTimeout(() => {
+                // إرسال الإشعار
+                sendNotification('📖 تذكير بسورة الكهف', 'لا تنس قراءة سورة الكهف اليوم! 🌙');
+                showToast('🔔 تذكير: حان وقت قراءة سورة الكهف');
+                
+                // إعادة جدولة التذكير للأسبوع القادم
+                scheduleWeeklyReminder();
+                
+            }, timeUntil);
+            
+            // حفظ معرف المؤقت
+            localStorage.setItem('electhiker_timeout_id', timeoutId);
+            
+            // عرض حالة التذكير
+            const reminderStatus = document.getElementById('reminderStatus');
+            reminderStatus.innerHTML = `✅ تم ضبط التذكير كل جمعة الساعة ${time}<br>
+                                        📅 التذكير القادم: ${nextFriday.toLocaleDateString('ar')} ${time}`;
+            reminderStatus.style.background = '#d1fae5';
+            reminderStatus.style.color = '#065f46';
+            
+            showToast(`✅ تم ضبط التذكير كل جمعة الساعة ${time}`);
+        }
+        
+        // جدولة التذكير الأسبوعي المتكرر
+        function scheduleWeeklyReminder() {
+            const savedReminder = localStorage.getItem('electhiker_reminder');
+            if (!savedReminder) return;
+            
+            const reminder = JSON.parse(savedReminder);
+            if (!reminder.active) return;
+            
+            const now = new Date();
+            const nextFriday = new Date();
+            const daysUntilFriday = (5 - now.getDay() + 7) % 7;
+            const daysToAdd = daysUntilFriday === 0 ? 7 : daysUntilFriday;
+            nextFriday.setDate(now.getDate() + daysToAdd);
+            nextFriday.setHours(reminder.hour, reminder.minute, 0, 0);
+            
+            if (nextFriday <= now) {
+                nextFriday.setDate(nextFriday.getDate() + 7);
+            }
+            
+            const timeUntil = nextFriday - now;
+            
+            const timeoutId = setTimeout(() => {
+                sendNotification('📖 تذكير بسورة الكهف', 'لا تنس قراءة سورة الكهف اليوم! 🌙');
+                showToast('🔔 تذكير: حان وقت قراءة سورة الكهف');
+                scheduleWeeklyReminder(); // إعادة الجدولة
+            }, timeUntil);
+            
+            localStorage.setItem('electhiker_timeout_id', timeoutId);
+        }
+        
+        // إلغاء التذكير
+        function cancelReminder() {
+            const timeoutId = localStorage.getItem('electhiker_timeout_id');
+            if (timeoutId) {
+                clearTimeout(parseInt(timeoutId));
+                localStorage.removeItem('electhiker_timeout_id');
+            }
+            
+            localStorage.removeItem('electhiker_reminder');
+            
+            const reminderStatus = document.getElementById('reminderStatus');
+            reminderStatus.innerHTML = `⏸️ تم إلغاء التذكير`;
+            reminderStatus.style.background = '#fee2e2';
+            reminderStatus.style.color = '#991b1b';
+            
+            showToast('⏸️ تم إلغاء التذكير');
+        }
+        
+        // التحقق من التذكير المحفوظ
+        function checkSavedReminder() {
+            const savedReminder = localStorage.getItem('electhiker_reminder');
+            if (savedReminder) {
+                const reminder = JSON.parse(savedReminder);
+                const now = new Date();
+                const nextTime = new Date(reminder.nextReminder);
+                
+                if (nextTime > now && reminder.active) {
+                    const timeUntil = nextTime - now;
+                    const timeoutId = setTimeout(() => {
+                        sendNotification('📖 تذكير بسورة الكهف', 'لا تنس قراءة سورة الكهف اليوم! 🌙');
+                        scheduleWeeklyReminder();
+                    }, timeUntil);
+                    
+                    localStorage.setItem('electhiker_timeout_id', timeoutId);
+                    
+                    const reminderStatus = document.getElementById('reminderStatus');
+                    reminderStatus.innerHTML = `🔔 التذكير مفعل كل جمعة الساعة ${reminder.time}<br>
+                                                📅 التذكير القادم: ${nextTime.toLocaleDateString('ar')} ${reminder.time}`;
+                    reminderStatus.style.background = '#d1fae5';
+                    reminderStatus.style.color = '#065f46';
+                } else {
+                    setReminder();
+                }
+            }
+        }
+        
+        // إعادة ضبط البيانات
+        function resetData() {
+            if (confirm('⚠️ هل أنت متأكد؟ سيتم حذف جميع البيانات (المداومة، النقاط، التحديات، السجل)')) {
+                streak = 0;
+                points = 0;
+                lastReadDate = null;
+                challenges = [
+                    { id: 1, text: "⭐ اقرأ سورة الكهف كاملة", points: 20, completed: false },
+                    { id: 2, text: "📖 تأمل في قصة أصحاب الكهف", points: 15, completed: false },
+                    { id: 3, text: "🤲 ادع بدعاء من السورة", points: 15, completed: false },
+                    { id: 4, text: "💫 شارك فضل السورة مع صديق", points: 10, completed: false },
+                    { id: 5, text: "🌙 اقرأ الآيات العشر الأولى", points: 10, completed: false }
+                ];
+                history = [];
+                
+                saveData();
+                updateDisplay();
+                cancelReminder();
+                showToast('🔄 تم إعادة ضبط البيانات بنجاح');
+            }
+        }
+        
+        // مشاركة الإنجاز
+        function shareAchievement() {
+            const message = `🍃 أنا أقرأ سورة الكهف كل جمعة!\n\n🔥 المداومة: ${streak} أسبوع\n💡 نقاط النور: ${points}\n\nتطبيق نور الكهف - تذكير بقراءة سورة الكهف`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'نور الكهف',
+                    text: message,
+                    url: window.location.href
+                }).catch(() => {
+                    copyToClipboard(message);
+                });
+            } else {
+                copyToClipboard(message);
+            }
+        }
+        
+        // نسخ النص للحافظة
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('📋 تم نسخ الإنجاز، يمكنك مشاركته الآن');
+            }).catch(() => {
+                showToast('⚠️ لم نتمكن من النسخ');
+            });
+        }
+        
+        // عرض آخر 7 أيام من الإشعارات
+        function showNotificationHistory() {
+            const notifications = localStorage.getItem('electhiker_notifications');
+            if (!notifications) {
+                showToast('لا يوجد إشعارات سابقة');
+                return;
+            }
+            
+            const notifs = JSON.parse(notifications);
+            if (notifs.length === 0) {
+                showToast('لا يوجد إشعارات سابقة');
+                return;
+            }
+            
+            let message = '📋 آخر الإشعارات:\n';
+            notifs.slice(0, 5).forEach((notif, i) => {
+                message += `${i+1}. ${notif.title} - ${notif.time}\n`;
+            });
+            
+            alert(message);
+        }
+        
+        // زر إعادة الضبط (سنضيفه في الواجهة)
+        function addResetButton() {
+            const container = document.querySelector('.container');
+            const resetBtn = document.createElement('button');
+            resetBtn.innerHTML = '<span>🔄</span> إعادة ضبط البيانات';
+            resetBtn.className = 'btn';
+            resetBtn.style.background = '#ef4444';
+            resetBtn.style.color = 'white';
+            resetBtn.style.marginTop = '10px';
+            resetBtn.onclick = resetData;
+            
+            const shareBtn = document.createElement('button');
+            shareBtn.innerHTML = '<span>📤</span> مشاركة الإنجاز';
+            shareBtn.className = 'btn';
+            shareBtn.style.background = '#3b82f6';
+            shareBtn.style.color = 'white';
+            shareBtn.style.marginTop = '10px';
+            shareBtn.onclick = shareAchievement;
+            
+            const historyBtn = document.createElement('button');
+            historyBtn.innerHTML = '<span>📋</span> سجل الإشعارات';
+            historyBtn.className = 'btn';
+            historyBtn.style.background = '#8b5cf6';
+            historyBtn.style.color = 'white';
+            historyBtn.style.marginTop = '10px';
+            historyBtn.onclick = showNotificationHistory;
+            
+            const cancelReminderBtn = document.createElement('button');
+            cancelReminderBtn.innerHTML = '<span>⏸️</span> إلغاء التذكير';
+            cancelReminderBtn.className = 'btn';
+            cancelReminderBtn.style.background = '#6b7280';
+            cancelReminderBtn.style.color = 'white';
+            cancelReminderBtn.style.marginTop = '10px';
+            cancelReminderBtn.onclick = cancelReminder;
+            
+            const buttonsDiv = document.createElement('div');
+            buttonsDiv.style.display = 'flex';
+            buttonsDiv.style.flexDirection = 'column';
+            buttonsDiv.style.gap = '10px';
+            buttonsDiv.style.marginTop = '20px';
+            buttonsDiv.appendChild(shareBtn);
+            buttonsDiv.appendChild(cancelReminderBtn);
+            buttonsDiv.appendChild(historyBtn);
+            buttonsDiv.appendChild(resetBtn);
+            
+            const footer = document.querySelector('footer');
+            footer.before(buttonsDiv);
+        }
+        
+        // حدث الضغط على زر التفعيل
+        document.getElementById('setReminderBtn').addEventListener('click', () => {
+            if ('Notification' in window && Notification.permission !== 'granted') {
+                requestNotificationPermission().then(() => {
+                    setReminder();
+                });
+            } else {
+                setReminder();
+            }
+        });
+        
+        document.getElementById('markReadBtn').addEventListener('click', markAsRead);
+        document.getElementById('enableNotificationsBtn').addEventListener('click', requestNotificationPermission);
+        
+        // تحقق من إذن الإشعارات عند التحميل
+        if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+            document.getElementById('permissionCard').style.display = 'block';
+        }
+        
+        // تحميل البيانات وبدء التشغيل
+        loadData();
+        checkSavedReminder();
+        addResetButton();
+        
+        // فحص الجمعة الحالية
+        const today = new Date();
+        if (today.getDay() === 5) {
+            const todayStr = today.toLocaleDateString('ar');
+            if (lastReadDate !== todayStr) {
+                setTimeout(() => {
+                    showToast('📖 اليوم جمعة! لا تنس قراءة سورة الكهف');
+                }, 1000);
+            }
+        }
+        
+        // إضافة دعم تثبيت التطبيق على الجوال (PWA)
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            const installBtn = document.createElement('button');
+            installBtn.innerHTML = '<span>📲</span> تثبيت التطبيق';
+            installBtn.className = 'btn btn-primary';
+            installBtn.style.marginTop = '15px';
+            installBtn.onclick = () => {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        showToast('📱 تم تثبيت التطبيق بنجاح');
+                    }
+                    installBtn.remove();
+                });
+            };
+            
+            const footer = document.querySelector('footer');
+            footer.before(installBtn);
+        });
+        
+        // تحديث المداومة تلقائياً عند فتح الموقع
+        function autoCheckStreak() {
+            const lastVisit = localStorage.getItem('electhiker_lastVisit');
+            const now = new Date().toLocaleDateString('ar');
+            
+            if (lastVisit !== now) {
+                localStorage.setItem('electhiker_lastVisit', now);
+            }
+        }
+        autoCheckStreak();
+        
+        console.log('🍃 تطبيق نور الكهف يعمل بنجاح');
+    </script>
+</body>
+</html>
